@@ -8,22 +8,23 @@ class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
         This is the object you will be modifying. """ 
 
-    def __init__(self, env, learning=True, epsilon=1, alpha=0.001):
+    def __init__(self, env, learning=False, epsilon=1, alpha=0.5):
         super(LearningAgent, self).__init__(env)     # Set the agent in the evironment 
         self.planner = RoutePlanner(self.env, self)  # Create a route planner
         self.valid_actions = self.env.valid_actions  # The set of valid actions
 
         # Set parameters of the learning agent
-        self.learning = learning # Whether the agent is expected to learn
+        self.learning = True # Whether the agent is expected to learn
         self.Q = dict()          # Create a Q-table which will be a dictionary of tuples
-        self.epsilon = epsilon   # Random exploration factor
-        self.alpha = alpha       # Learning factor
+        self.epsilon = 1   # Random exploration factor
+        self.alpha = 0.6       # Learning factor
 
         ###########
         ## TO DO ##
         ###########
         # Set any additional class parameters as needed
         self.trial = 0
+        self.a = 0.01
 
     def reset(self, destination=None, testing=False):
         """ The reset function is called at the beginning of each trial.
@@ -47,7 +48,7 @@ class LearningAgent(Agent):
             #self.epsilon = self.epsilon - 0.05
             #self.epsilon = 1.0/(self.trial**2)
             #self.epsilon = math.exp(-1 * self.alpha * self.trial)
-            self.epsilon = math.cos(self.alpha * self.trial)
+            self.epsilon = math.cos(self.a * self.trial)
             #self.epsilon = self.alpha ** self.trial
         return None
 
@@ -71,7 +72,7 @@ class LearningAgent(Agent):
         # With the hand-engineered features, this learning process gets entirely negated.
         
         # Set 'state' as a tuple of relevant data for the agent        
-        state = (waypoint, inputs['light'], inputs['left'], inputs['right'], inputs['oncoming'] )
+        state = (waypoint, inputs['light'], inputs['left'], inputs['oncoming'] )
 
         return state
 
@@ -216,7 +217,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test = 25, tolerance = 0.000000001)
+    sim.run(n_test = 25, tolerance = 0.0001)
 
 
 if __name__ == '__main__':
