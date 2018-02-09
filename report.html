@@ -16354,14 +16354,14 @@ gg==
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: The optimal policy for the smartcab in the environment is the best possible action. The optimal policy is the set of state/actions pairs where a action in each state has a max Q-value. This can be summarized in two sentences based on the sim_improved-learning data.</strong></p>
 <p><strong>1)  If 'red light' and the agent's 'waypoint' is right make a right only if there isn't a car on the 'left' going forward, else do nothing.</strong></p>
-<p><strong>2)  If 'green light' and there is 'oncoming' traffic making a right(left from agent perspective), then do nothing if agent 'waypoint' is left', else follow 'waypoint' direction</strong></p>
+<p><strong>2)  If 'green light' and there is 'oncoming' traffic making a right(left from agent perspective) or going forward, then go forward if agent 'waypoint' is left, else follow 'waypoint' direction</strong></p>
 <p><strong>states : (waypoint, light, left, oncoming) </strong></p>
 <p><strong>For almost all states the optimal policy is correct since the max Q-value is the correct course of action. However, there are some  . ('right', 'red', 'right', 'left')
  -- forward : 0.00
  -- None : 1.04
  -- right : 0.00
  -- left : 0.00 </strong></p>
-<p><strong>This shows that the optimal action was to do nothing but in reality a right could have been made since the car on the left was turning. This scenario probably occurred because the agent was choosing the the highest Q-value at this time rather than a random action (currently not exploring but using learned action).</strong></p>
+<p><strong>This shows that the optimal action was to do nothing but in reality a right could have been made since the car on the left was turning. This scenario probably occurred because the agent was choosing the the highest Q-value at this time rather than a random action (currently not exploring but using learned action since the rest of the actions were not explored during training).</strong></p>
 <p><strong>Here are two examples of where the smartcab learned the optimal policy:</strong></p>
 <p><strong>('forward', 'red', 'forward', None)
  -- forward : -39.21
